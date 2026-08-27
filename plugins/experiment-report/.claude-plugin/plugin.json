@@ -1,0 +1,12 @@
+{
+  "name": "experiment-report",
+  "version": "1.0.0",
+  "description": "Write a structured post-hoc report on one machine learning experiment or on a sweep. Resolves runs from wandb ids, tensorboard logs, or Hydra output directories, reconstructs intent from git commits and notes, confirms that intent with the user, and writes the report as an Obsidian note.",
+  "author": {
+    "name": "Dongwon Kim",
+    "url": "https://github.com/kdwonn"
+  },
+  "repository": "https://github.com/kdwonn/claude-skills",
+  "license": "MIT",
+  "keywords": ["machine-learning", "experiment-tracking", "wandb", "tensorboard", "hydra", "obsidian", "research-notes"]
+}
