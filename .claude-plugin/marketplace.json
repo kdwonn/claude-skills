@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "kdwonn-skills",
+  "description": "Claude Code skills for technical writing and machine learning experiment documentation.",
+  "owner": {
+    "name": "Dongwon Kim",
+    "url": "https://github.com/kdwonn"
+  },
+  "plugins": [
+    {
+      "name": "asd-ste100",
+      "source": "./plugins/asd-ste100",
+      "description": "Write technical prose with the structural rules of ASD-STE100 Simplified Technical English.",
+      "category": "productivity",
+      "version": "1.0.0"
+    },
+    {
+      "name": "experiment-report",
+      "source": "./plugins/experiment-report",
+      "description": "Write structured post-hoc reports on machine learning experiments and sweeps, saved as Obsidian notes.",
+      "category": "productivity",
+      "version": "1.0.0"
+    }
+  ]
+}
