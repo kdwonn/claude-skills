@@ -1,0 +1,12 @@
+{
+  "name": "asd-ste100",
+  "version": "1.0.0",
+  "description": "Write technical prose with the structural rules of ASD-STE100 Simplified Technical English — short sentences, active voice, simple tenses, one instruction per sentence, and no noun cluster longer than three words. Use when drafting or revising notes, READMEs, design docs, docstrings, runbooks, and commit bodies, or when asked to simplify, tighten, or clarify existing prose.",
+  "author": {
+    "name": "Dongwon Kim",
+    "url": "https://github.com/kdwonn"
+  },
+  "repository": "https://github.com/kdwonn/claude-skills",
+  "license": "MIT",
+  "keywords": ["writing", "technical-writing", "simplified-technical-english", "ste", "plain-english", "documentation"]
+}
