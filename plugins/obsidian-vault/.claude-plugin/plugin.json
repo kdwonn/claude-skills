@@ -1,0 +1,12 @@
+{
+  "name": "obsidian-vault",
+  "version": "1.0.0",
+  "description": "Five skills that treat an Obsidian vault as a knowledge graph rather than a folder of files. Search the vault with priority-aware ranking and subagent synthesis, discover and apply bidirectional wikilinks, summarize a research paper with cropped figures and honest vault placement, snapshot folder activity into folder notes, and write a daily log from Claude Code sessions, git commits, and vault changes. Use when the user searches or asks what they know about a topic, wants notes connected or linked, wants a paper summarized, wants vault state documented, or wants a daily or end-of-day log.",
+  "author": {
+    "name": "Dongwon Kim",
+    "url": "https://github.com/kdwonn"
+  },
+  "repository": "https://github.com/kdwonn/claude-skills",
+  "license": "MIT",
+  "keywords": ["obsidian", "zettelkasten", "note-taking", "knowledge-management", "research-notes", "paper-summary", "daily-log", "backlinks"]
+}
