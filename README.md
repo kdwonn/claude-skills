@@ -44,21 +44,20 @@ It ships `scripts/ste_check.py`, which flags long sentences, passive voice, and 
 
 ## launch-experiment
 
-This skill turns "run an experiment with X changed" into a file you can read back later.
+This skill turns "run an experiment with X changed" into a round folder you can read back later.
 
-It writes a bash launcher to `experiment/MMDD/<name>.sh`. The launcher calls `scripts/train.sh` with your Hydra overrides. A header comment at the top records the name, the purpose, and the date. The run name (`trainer.notes`) is pinned to the script name, so the script, the folder entry, and the tracked run all share one identifier.
+A round is a folder `experiment/MMDD_topic/` holding hand-written bash scripts that call `scripts/train.sh` with Hydra overrides — shared `env.sh` and `arm_overrides.sh`, one launcher per arm. There is no generator: the skill instructs the agent to copy house style from the newest existing round folder and preserve the invariants (a purpose header citing the design log, `trainer.notes` pinned to the arm name so script, log, output dir, and tracked run share one identifier, a tee'd log per arm).
 
-The skill validates the config **before** it touches a GPU. It runs `python train.py --cfg job` with the same overrides. A typo'd override key fails there in a second, instead of after the dataset loads.
+The skill validates every arm's config **before** it touches a GPU. It runs `python train.py --cfg job` with the same overrides. A typo'd override key fails there in a second, instead of after the dataset loads.
 
-It then launches the run inside a detached tmux session named `exp-<name>`. The job survives an SSH disconnect. You reattach with `tmux attach -t exp-<name>` and stop it with `tmux kill-session -t exp-<name>`. Output is teed to `experiment/MMDD/<name>.log`, so the run stays readable after the pane closes. A second launch of the same name is refused rather than silently duplicated.
+The bundled `launch.sh` runs each arm as a **window** in one detached tmux session per round, `exp-<MMDD_topic>`. The round survives an SSH disconnect and is one unit: `tmux attach -t exp-<round>` shows all arms as windows, `tmux kill-window` stops one arm, `tmux kill-session` stops the whole round. Output is teed to `experiment/<round>/logs/<arm>.log`, so runs stay readable after windows close. A duplicate arm launch is refused rather than silently doubled, and when `CUDA_VISIBLE_DEVICES` is set the launch is refused if any listed GPU already holds a job.
 
 ### Requirements
 
-- A git repository. Both drivers resolve the repo root with `git rev-parse --show-toplevel`, so run them from inside your project.
-- A Hydra entry point at `train.py` and a multi-GPU wrapper at `scripts/train.sh` that reads `NUM_GPUS`. This is the layout the skill assumes; adjust the drafted script if yours differs.
-- `tmux` on your `PATH`.
-
-The gotchas section of `SKILL.md` names a few conventions from the repo this skill grew in — `model`/`data` defaults of `???`, and `model.use_fa4=false` on pre-Hopper GPUs. Delete the ones that do not apply to you.
+- A git repository. `launch.sh` resolves the repo root with `git rev-parse --show-toplevel`, so run it from inside your project.
+- A Hydra entry point at `train.py` and a multi-GPU wrapper at `scripts/train.sh` that reads `NUM_GPUS`. This is the layout the skill assumes.
+- `tmux` on your `PATH`; `nvidia-smi` for the GPU busy guard.
+- At least one existing round folder under `experiment/` to serve as the style guide — box constraints (GPU maps, ports) are expected to live in project memory or `CLAUDE.md`, so the skill degrades outside the repo it grew in.
 
 ## experiment-report
 
