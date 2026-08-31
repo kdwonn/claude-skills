@@ -1,0 +1,12 @@
+{
+  "name": "launch-experiment",
+  "version": "1.0.0",
+  "description": "Draft and launch a training experiment as a dated bash launcher under experiment/MMDD/. Validates the Hydra config with --cfg job before any GPU is touched, then starts the run in a detached tmux session that survives an SSH disconnect.",
+  "author": {
+    "name": "Dongwon Kim",
+    "url": "https://github.com/kdwonn"
+  },
+  "repository": "https://github.com/kdwonn/claude-skills",
+  "license": "MIT",
+  "keywords": ["machine-learning", "experiment-tracking", "hydra", "accelerate", "tmux", "training", "gpu"]
+}

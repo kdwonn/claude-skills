@@ -5,6 +5,7 @@ Skills for [Claude Code](https://claude.com/claude-code), packaged as a plugin m
 | Plugin | What it does |
 |---|---|
 | `asd-ste100` | Writes technical prose under the structural rules of ASD-STE100 Simplified Technical English. |
+| `launch-experiment` | Drafts a dated training launcher, validates its config, and starts it in a detached tmux session. |
 | `experiment-report` | Writes a post-hoc report on a machine learning run or sweep, and files it as an Obsidian note. |
 | `obsidian-vault` | Five skills that work an Obsidian vault as a knowledge graph: search, link, summarize papers, document folders, log the day. |
 
@@ -15,6 +16,7 @@ Add the marketplace. Then install the plugin you want:
 ```
 /plugin marketplace add kdwonn/claude-skills
 /plugin install asd-ste100@kdwonn-skills
+/plugin install launch-experiment@kdwonn-skills
 /plugin install experiment-report@kdwonn-skills
 /plugin install obsidian-vault@kdwonn-skills
 ```
@@ -39,6 +41,24 @@ The skill triggers on ordinary requests. "Write up my notes on X", "add a README
 It ships `scripts/ste_check.py`, which flags long sentences, passive voice, and long noun clusters in a draft.
 
 **Do not** use it for conversational replies, creative writing, or prompt engineering.
+
+## launch-experiment
+
+This skill turns "run an experiment with X changed" into a file you can read back later.
+
+It writes a bash launcher to `experiment/MMDD/<name>.sh`. The launcher calls `scripts/train.sh` with your Hydra overrides. A header comment at the top records the name, the purpose, and the date. The run name (`trainer.notes`) is pinned to the script name, so the script, the folder entry, and the tracked run all share one identifier.
+
+The skill validates the config **before** it touches a GPU. It runs `python train.py --cfg job` with the same overrides. A typo'd override key fails there in a second, instead of after the dataset loads.
+
+It then launches the run inside a detached tmux session named `exp-<name>`. The job survives an SSH disconnect. You reattach with `tmux attach -t exp-<name>` and stop it with `tmux kill-session -t exp-<name>`. Output is teed to `experiment/MMDD/<name>.log`, so the run stays readable after the pane closes. A second launch of the same name is refused rather than silently duplicated.
+
+### Requirements
+
+- A git repository. Both drivers resolve the repo root with `git rev-parse --show-toplevel`, so run them from inside your project.
+- A Hydra entry point at `train.py` and a multi-GPU wrapper at `scripts/train.sh` that reads `NUM_GPUS`. This is the layout the skill assumes; adjust the drafted script if yours differs.
+- `tmux` on your `PATH`.
+
+The gotchas section of `SKILL.md` names a few conventions from the repo this skill grew in — `model`/`data` defaults of `???`, and `model.use_fa4=false` on pre-Hopper GPUs. Delete the ones that do not apply to you.
 
 ## experiment-report
 
