@@ -1,7 +1,7 @@
 {
   "name": "launch-experiment",
-  "version": "1.0.0",
-  "description": "Draft and launch a training experiment as a dated bash launcher under experiment/MMDD/. Validates the Hydra config with --cfg job before any GPU is touched, then starts the run in a detached tmux session that survives an SSH disconnect.",
+  "version": "2.0.0",
+  "description": "Scaffold and launch a training experiment round under experiment/MMDD_topic/, copying house style from the newest round folder. Validates every arm's Hydra config with --cfg job before any GPU is touched, then runs each arm as a window in one detached tmux session per round.",
   "author": {
     "name": "Dongwon Kim",
     "url": "https://github.com/kdwonn"

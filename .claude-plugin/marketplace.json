@@ -24,9 +24,9 @@
     {
       "name": "launch-experiment",
       "source": "./plugins/launch-experiment",
-      "description": "Draft and launch a training experiment as a dated bash launcher, config-validated and run in a detached tmux session.",
+      "description": "Scaffold and launch a training experiment round, config-validated per arm and run as windows in one detached tmux session per round.",
       "category": "productivity",
-      "version": "1.0.0"
+      "version": "2.0.0"
     },
     {
       "name": "obsidian-vault",
